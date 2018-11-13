@@ -25,7 +25,7 @@ func main() {
 	r.HandleFunc("/editCategory", testServer).Methods("GET")
 	r.HandleFunc("/deleteCategory", testServer).Methods("GET")
 
-	r.HandleFunc("/addIncoming", testServer).Methods("GET")
+	r.HandleFunc("/addIncoming", getAddIncoming).Methods("GET")
 	r.HandleFunc("/addOutgoing", testServer).Methods("GET")
 	r.HandleFunc("/editHistory", testServer).Methods("GET")
 
@@ -34,4 +34,8 @@ func main() {
 
 func testServer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Server is Up")
+}
+
+func getAddIncoming(w http.ResponseWriter, r *http.Request) {
+	tmpl.ExecuteTemplate(w, "IncomingStock", "")
 }
