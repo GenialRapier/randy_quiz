@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
+	// "fmt"
 	"net/http"
 	"text/template"
 	"github.com/gorilla/mux"
@@ -37,6 +37,7 @@ func main() {
 	r.HandleFunc("/deleteCategory", testServer).Methods("GET")
 
 	r.HandleFunc("/addIncoming", getAddIncoming).Methods("GET")
+	r.HandleFunc("/addIncoming", postAddIncoming).Methods("POST")
 	r.HandleFunc("/addOutgoing", testServer).Methods("GET")
 	r.HandleFunc("/editHistory", testServer).Methods("GET")
 
@@ -84,8 +85,20 @@ func getAddIncoming(w http.ResponseWriter, r *http.Request) {
         itemList = append(itemList, item)
 	}
 
-	fmt.Println(itemList)
-
 	tmpl.ExecuteTemplate(w, "IncomingStock", itemList)
 	defer db.Close()
+}
+
+func postAddIncoming(w http.ResponseWriter, r * http.Request) {
+	db := dbConn()
+
+	itemId := r.FormValue("item_id")
+    quantity := r.FormValue("quantity")
+    details := r.FormValue("details")
+
+    query, err := db.Prepare("INSERT INTO histories(items_id, date, movement, quantity, details) VALUES(?,NOW(),'incoming',?,?)")
+    if err != nil { panic(err.Error()) }
+    query.Exec(itemId, quantity, details)
+
+    defer db.Close()
 }
