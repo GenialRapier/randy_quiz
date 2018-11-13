@@ -10,11 +10,13 @@
 		<form action="/addIncoming" method="POST">
 			Item
 			<select name="item_id">
-				
+				{{ range . }}
+					<option value="{{ .Id }}">{{ .Name }}</option>
+				{{ end }}
 			</select><br>
 			Quantity <input type="number"><br>
 			Details <input type="text"><br>
-			<input type="text">
+			<input type="submit">
 		</form>
 	</body>
 </html>
