@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"text/template"
 
 	"github.com/gorilla/mux"
 )
+
+var tmpl = template.Must(template.ParseGlob("form/*"))
 
 func main() {
 	r := mux.NewRouter()
