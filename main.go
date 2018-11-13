@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-
+	"database/sql"
 	"github.com/gorilla/mux"
 )
 
@@ -31,4 +31,25 @@ func main() {
 
 func testServer(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Server is Up")
+}
+
+type Items struct {
+    id    int
+    name  string
+	price int
+	stock int
+	category_id int
+	details string
+}
+
+func dbConn() (db *sql.DB) {
+    dbDriver := "mysql"
+    dbUser := "root"
+    dbPass := ""
+    dbName := "quiz3"
+    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
+    if err != nil {
+        panic(err.Error())
+    }
+    return db
 }
