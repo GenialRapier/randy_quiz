@@ -2,12 +2,12 @@ package main
 
 import (
 	"net/http"
-<<<<<<< HEAD
+
 	"database/sql"
-=======
+
 	"text/template"
 
->>>>>>> bd14bee00889e826e5765b06c2dc400801e94a47
+
 	"github.com/gorilla/mux"
 )
 
@@ -17,8 +17,10 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", testServer)
-
-	r.HandleFunc("/addItem", testServer).Methods("GET")
+	
+	r.HandleFunc("/addItem", addItem).Methods("GET")
+	r.HandleFunc("/addItem", insertItem).Methods("POST")
+	
 	r.HandleFunc("/removeItem", testServer).Methods("GET")
 	r.HandleFunc("/editItem", testServer).Methods("GET")
 	r.HandleFunc("/deleteItem", testServer).Methods("GET")
@@ -44,12 +46,12 @@ func getAddIncoming(w http.ResponseWriter, r *http.Request) {
 }
 
 type Items struct {
-    id    int
-    name  string
-	price int
-	stock int
-	category_id int
-	details string
+    ID    int
+    Name  string
+	Price int
+	Stock int
+	Category_id int
+	Details string
 }
 
 func dbConn() (db *sql.DB) {
@@ -62,4 +64,26 @@ func dbConn() (db *sql.DB) {
         panic(err.Error())
     }
     return db
+}
+
+func addItem(w http.ResponseWriter, r *http.Request) {
+    tmpl.ExecuteTemplate(w, "addItem", "")
+}
+
+func insertItem(w http.ResponseWriter, r *http.Request) {
+    db := dbConn()
+    if r.Method == "POST" {
+        name := r.FormValue("name")
+        price := r.FormValue("price")
+		stock := r.FormValue("stock")
+		category_id := r.FormValue("category_id")
+		details := r.FormValue("details")
+        insForm, err := db.Prepare("INSERT INTO Items(name, price, stock, category_id, details) VALUES(?,?,?,?,?)")
+        if err != nil {
+            panic(err.Error())
+        }
+        insForm.Exec(name, price, stock,category_id,details)
+    }
+    defer db.Close()
+    http.Redirect(w, r, "/", 301)
 }

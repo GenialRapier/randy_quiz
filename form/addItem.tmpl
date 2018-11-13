@@ -1,0 +1,23 @@
+{{ define "addItem" }}
+ <!doctype html>
+<html>
+	<head>
+		<title>Stock Management System</title>
+    <meta charset="UTF-8" />
+	</head>
+   <h2>New</h2>  
+    <form method="POST" action="/addItem">
+      <label> Name </label><input type="text" name="name" /><br />
+      <label> Price </label><input type="text" name="price" /><br />
+	  <label> Stock </label><input type="text" name="stock" /><br />
+	  <label> Category </label>
+	  <select name = "category_id">
+		<option value="1">Clothing</option>
+		<option value="2">Food</option>
+		<option value="3">Miniature</option>
+	</select><br>
+	  <label> Details </label><input type="textarea" name="details" /><br />
+      <input type="submit" value="Save" />
+    </form>
+</html>
+{{ end }}
