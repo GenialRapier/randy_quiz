@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"text/template"
 
@@ -13,7 +12,7 @@ var tmpl = template.Must(template.ParseGlob("form/*"))
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/test", testServer)
+	r.HandleFunc("/", testServer)
 
 	r.HandleFunc("/addItem", testServer).Methods("GET")
 	r.HandleFunc("/removeItem", testServer).Methods("GET")
@@ -33,7 +32,7 @@ func main() {
 }
 
 func testServer(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Server is Up")
+	tmpl.ExecuteTemplate(w, "home", "")
 }
 
 func getAddIncoming(w http.ResponseWriter, r *http.Request) {
