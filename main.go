@@ -1,13 +1,9 @@
 package main
 
 import (
-	"net/http"
-<<<<<<< HEAD
 	"database/sql"
-=======
+	"net/http"
 	"text/template"
-
->>>>>>> bd14bee00889e826e5765b06c2dc400801e94a47
 	"github.com/gorilla/mux"
 )
 
