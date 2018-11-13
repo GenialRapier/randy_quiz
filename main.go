@@ -63,24 +63,3 @@ func dbConn() (db *sql.DB) {
     }
     return db
 }
-
-type Items struct {
-    id    int
-    name  string
-	price int
-	stock int
-	category_id int
-	details string
-}
-
-func dbConn() (db *sql.DB) {
-    dbDriver := "mysql"
-    dbUser := "root"
-    dbPass := ""
-    dbName := "quiz3"
-    db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@/"+dbName)
-    if err != nil {
-        panic(err.Error())
-    }
-    return db
-}
