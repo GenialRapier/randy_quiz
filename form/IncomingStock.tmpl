@@ -6,13 +6,15 @@
     <meta charset="UTF-8" />
 	</head>
 	<body>
-		<h1>Add Incoming</h1>
+		<h1>Add Incomings</h1>
 		<form action="/addIncoming" method="POST">
+			Item
 			<select name="item_id">
-				{{ range . }}
-					<option value="{{ .Id }}">{{ .Name }}</option>
-				{{ end }}
-			</select>
+				
+			</select><br>
+			Quantity <input type="number"><br>
+			Details <input type="text"><br>
+			<input type="text">
 		</form>
 	</body>
 </html>
