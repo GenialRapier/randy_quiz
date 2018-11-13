@@ -22,6 +22,10 @@ func main() {
 	r.HandleFunc("/editCategory", testServer).Methods("GET")
 	r.HandleFunc("/deleteCategory", testServer).Methods("GET")
 
+	r.HandleFunc("/addIncoming", testServer).Methods("GET")
+	r.HandleFunc("/addOutgoing", testServer).Methods("GET")
+	r.HandleFunc("/editHistory", testServer).Methods("GET")
+
 	http.ListenAndServe(":14045", r)
 }
 
